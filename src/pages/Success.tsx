@@ -13,6 +13,8 @@ const Success = () => {
   const elapsedTime = getElapsedTime(GAME_DURATION, timeLeft);
 
   useEffect(() => {
+    // Debug log to ensure component is loading
+    console.log('Success page loaded successfully!');
     // Trigger celebration animation
     setTimeout(() => setShowCelebration(true), 500);
   }, []);

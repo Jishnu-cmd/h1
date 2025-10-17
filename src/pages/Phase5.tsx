@@ -44,13 +44,12 @@ const Phase5 = () => {
       const encodedUrl = extractionCookie.split('=')[1];
       try {
         const decodedUrl = atob(encodedUrl);
-        window.location.href = decodedUrl;
+        // Extract the path from the URL and navigate using React Router
+        const url = new URL(decodedUrl);
+        navigate(url.pathname);
       } catch (error) {
-        toast({
-          title: "Decoding Error",
-          description: "Failed to decode extraction route.",
-          variant: "destructive",
-        });
+        // Fallback: navigate directly to success page
+        navigate('/success');
       }
     } else {
       toast({
@@ -163,7 +162,7 @@ const Phase5 = () => {
                 </p>
               </div>
               
-              <div className="pt-4">
+              <div className="pt-4 space-y-3">
                 <Button 
                   variant="cyber-secondary" 
                   onClick={findExtractionRoute}
@@ -171,6 +170,22 @@ const Phase5 = () => {
                 >
                   Find Extraction Route
                 </Button>
+                
+                <div className="text-center space-y-2">
+                  <Button 
+                    variant="outline" 
+                    onClick={() => {
+                      console.log('Navigating to success page...');
+                      navigate('/success');
+                    }}
+                    className="text-sm w-full"
+                  >
+                    🚀 Complete Mission (Direct Route)
+                  </Button>
+                  <p className="text-xs text-muted-foreground">
+                    Use this if the extraction route doesn't work
+                  </p>
+                </div>
               </div>
             </div>
           )}
