@@ -23,11 +23,19 @@ const Success = () => {
   };
 
   const openWinnerForm = () => {
-    const formUrl = elapsedTime 
-      ? `https://docs.google.com/forms/d/e/1FAIpQLScBmHp0-Sg72zfsN3MpOJ0M_4qe8AeP75mLAMCIGo12hsqGMg/viewform?usp=pp_url&entry.2039261618=${encodeURIComponent(elapsedTime)}`
-      : "https://forms.gle/Y5wC6J4tHr4Cm8kf8";
+    // Use the simpler forms.gle URL to avoid potential issues with complex URLs
+    const formUrl = "https://forms.gle/Y5wC6J4tHr4Cm8kf8";
     
-    window.open(formUrl, '_blank', 'noopener,noreferrer');
+    console.log('Opening winner form:', formUrl);
+    
+    // Try opening the form
+    const newWindow = window.open(formUrl, '_blank');
+    
+    // Check if the window was blocked
+    if (!newWindow || newWindow.closed || typeof newWindow.closed == 'undefined') {
+      // Fallback: show alert if popup was blocked
+      alert('Please allow popups for this site to open the winner form, or copy this URL: ' + formUrl);
+    }
   };
 
   return (
@@ -127,38 +135,38 @@ const Success = () => {
             </div>
           </div>
 
-          {/* Winner Form */}
-          {showForm ? (
-            <div className="space-y-6">
-              <GameForms formType="winner" timeElapsed={elapsedTime} />
-              <div className="flex justify-center">
-                <Button 
-                  variant="cyber-secondary" 
-                  size="lg"
-                  onClick={() => setShowForm(false)}
-                >
-                  Hide Form
-                </Button>
-              </div>
-            </div>
-          ) : (
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button 
-                variant="cyber-secondary" 
-                size="lg"
-                onClick={() => setShowForm(true)}
+          {/* Action Buttons */}
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Button 
+              variant="cyber-secondary" 
+              size="lg"
+              onClick={openWinnerForm}
+            >
+              FILL THE WINNER FORM
+            </Button>
+            <Button 
+              variant="outline" 
+              size="lg"
+              onClick={resetGame}
+            >
+              Play Again
+            </Button>
+          </div>
+
+          {/* Form Link Backup */}
+          <div className="terminal max-w-2xl mx-auto">
+            <p className="text-sm text-muted-foreground text-center">
+              If the form doesn't open automatically, you can access it directly at:<br />
+              <a 
+                href="https://forms.gle/Y5wC6J4tHr4Cm8kf8" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-primary hover:text-secondary underline break-all"
               >
-                FILL THE WINNER FORM
-              </Button>
-              <Button 
-                variant="outline" 
-                size="lg"
-                onClick={resetGame}
-              >
-                Play Again
-              </Button>
-            </div>
-          )}
+                https://forms.gle/Y5wC6J4tHr4Cm8kf8
+              </a>
+            </p>
+          </div>
 
           {/* Fun GIF/Video placeholder */}
           <div className="terminal p-8 max-w-md mx-auto">
