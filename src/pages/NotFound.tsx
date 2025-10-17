@@ -27,8 +27,7 @@ const NotFound = () => {
   }, [location.pathname, timeLeft]);
 
   const resetGame = () => {
-    // Clear any cookies and reset
-    document.cookie = "extraction_route=; path=/; max-age=0";
+    // Reset the game
     window.location.href = "/";
   };
 

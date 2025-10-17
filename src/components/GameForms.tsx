@@ -1,4 +1,5 @@
 import React from "react";
+import { Button } from "@/components/ui/button";
 
 interface GameFormProps {
   formType: 'start' | 'winner' | 'abortive';
@@ -10,19 +11,19 @@ const GameForms: React.FC<GameFormProps> = ({ formType, timeElapsed }) => {
     switch (formType) {
       case 'start':
         return "https://forms.gle/R8eX9BhSWFxdpMe69";
-      
+
       case 'winner':
         if (timeElapsed) {
           return `https://docs.google.com/forms/d/e/1FAIpQLScBmHp0-Sg72zfsN3MpOJ0M_4qe8AeP75mLAMCIGo12hsqGMg/viewform?usp=pp_url&entry.2039261618=${encodeURIComponent(timeElapsed)}`;
         }
         return "https://forms.gle/Y5wC6J4tHr4Cm8kf8";
-      
+
       case 'abortive':
         if (timeElapsed) {
           return `https://docs.google.com/forms/d/e/1FAIpQLScNwQjuhxzLPUm0yIIb3JbUW1QxeY3EeQmSV5U_GVIwcwNH4A/viewform?usp=pp_url&entry.964646701=${encodeURIComponent(timeElapsed)}`;
         }
         return "https://forms.gle/mDRBTcLHL8LzfD2Z8";
-      
+
       default:
         return "";
     }
@@ -54,6 +55,13 @@ const GameForms: React.FC<GameFormProps> = ({ formType, timeElapsed }) => {
     }
   };
 
+  const openFormInNewTab = () => {
+    const url = getFormUrl();
+    if (url) {
+      window.open(url, '_blank', 'noopener,noreferrer');
+    }
+  };
+
   return (
     <div className="w-full max-w-4xl mx-auto">
       <div className="terminal space-y-4 mb-6">
@@ -64,20 +72,16 @@ const GameForms: React.FC<GameFormProps> = ({ formType, timeElapsed }) => {
           {getFormDescription()}
         </p>
       </div>
-      
-      <div className="w-full h-[600px] border border-primary/30 rounded-lg overflow-hidden">
-        <iframe
-          src={getFormUrl()}
-          width="100%"
-          height="100%"
-          frameBorder="0"
-          marginHeight={0}
-          marginWidth={0}
-          title={getFormTitle()}
-          className="w-full h-full"
+
+      <div className="flex justify-center">
+        <Button
+          onClick={openFormInNewTab}
+          variant="cyber-primary"
+          size="lg"
+          className="text-lg px-8 py-4"
         >
-          Loading form...
-        </iframe>
+          Open Form in New Tab
+        </Button>
       </div>
     </div>
   );

@@ -14,15 +14,10 @@ const Phase5 = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (combinedKey.trim() === "741") {
-      // Set the extraction route cookie
-      const successUrl = window.location.origin + "/success";
-      const encodedUrl = btoa(successUrl);
-      document.cookie = `extraction_route=${encodedUrl}; path=/; max-age=3600`;
-      
       setKeySubmitted(true);
       toast({
         title: "Key Accepted",
-        description: "Escape route encrypted in transaction logs!",
+        description: "Extraction successful! Mission complete!",
       });
     } else {
       toast({
@@ -33,31 +28,8 @@ const Phase5 = () => {
     }
   };
 
-  const findExtractionRoute = () => {
-    // Get the cookie value
-    const cookies = document.cookie.split(';');
-    const extractionCookie = cookies.find(cookie => 
-      cookie.trim().startsWith('extraction_route=')
-    );
-    
-    if (extractionCookie) {
-      const encodedUrl = extractionCookie.split('=')[1];
-      try {
-        const decodedUrl = atob(encodedUrl);
-        // Extract the path from the URL and navigate using React Router
-        const url = new URL(decodedUrl);
-        navigate(url.pathname);
-      } catch (error) {
-        // Fallback: navigate directly to success page
-        navigate('/success');
-      }
-    } else {
-      toast({
-        title: "Route Not Found",
-        description: "No extraction route found in transaction logs.",
-        variant: "destructive",
-      });
-    }
+  const proceedToSuccess = () => {
+    navigate('/success');
   };
 
   // Auto-show hint after 5 minutes
@@ -138,54 +110,35 @@ const Phase5 = () => {
               </form>
             </div>
           ) : (
-            /* Escape Instructions */
+            /* Mission Complete */
             <div className="terminal space-y-6 max-w-3xl mx-auto">
               <div className="text-lg border-b border-accent/30 pb-2">
-                <span className="text-accent">EXTRACTION PROTOCOL</span> - Escape Route Encrypted
+                <span className="text-accent">EXTRACTION COMPLETE</span> - Mission Successful
               </div>
               
               <div className="space-y-4 text-muted-foreground">
                 <p className="text-primary font-semibold">
-                  ✅ Master key verified! Escape route has been encrypted and stored securely.
+                  ✅ Master key verified! Extraction successful!
                 </p>
                 
                 <p>
-                  For your security, I've hidden your extraction route in the bank's 
-                  transaction logs. This ensures the route can't be 
-                  intercepted by their security systems.
+                  Congratulations! You've successfully completed all phases of the operation.
+                  The team has escaped safely with maximum value extracted from the vault.
                 </p>
                 
                 <p className="text-secondary">
-                  To complete your escape: Access the browser's transaction logs and 
-                  look for the "extraction_route" entry. The route is Base64 encoded 
-                  for additional security.
+                  Click below to proceed to the mission debrief and submit your completion form.
                 </p>
               </div>
               
-              <div className="pt-4 space-y-3">
+              <div className="pt-4">
                 <Button 
-                  variant="cyber-secondary" 
-                  onClick={findExtractionRoute}
-                  className="w-full"
+                  variant="cyber-primary" 
+                  onClick={proceedToSuccess}
+                  className="w-full text-lg py-3"
                 >
-                  Find Extraction Route
+                  🚀 Complete Mission & Submit Form
                 </Button>
-                
-                <div className="text-center space-y-2">
-                  <Button 
-                    variant="outline" 
-                    onClick={() => {
-                      console.log('Navigating to success page...');
-                      navigate('/success');
-                    }}
-                    className="text-sm w-full"
-                  >
-                    🚀 Complete Mission (Direct Route)
-                  </Button>
-                  <p className="text-xs text-muted-foreground">
-                    Use this if the extraction route doesn't work
-                  </p>
-                </div>
               </div>
             </div>
           )}

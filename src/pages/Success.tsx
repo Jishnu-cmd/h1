@@ -1,13 +1,11 @@
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import TimerDisplay from "@/components/TimerDisplay";
-import GameForms from "@/components/GameForms";
 import { useTimer } from "@/components/TimerContext";
 import { getElapsedTime, GAME_DURATION } from "@/utils/timeUtils";
 
 const Success = () => {
   const [showCelebration, setShowCelebration] = useState(false);
-  const [showForm, setShowForm] = useState(false);
   const { timeLeft } = useTimer();
   
   const elapsedTime = getElapsedTime(GAME_DURATION, timeLeft);
@@ -20,9 +18,16 @@ const Success = () => {
   }, []);
 
   const resetGame = () => {
-    // Clear any cookies and reset
-    document.cookie = "extraction_route=; path=/; max-age=0";
+    // Reset the game
     window.location.href = "/";
+  };
+
+  const openWinnerForm = () => {
+    const formUrl = elapsedTime 
+      ? `https://docs.google.com/forms/d/e/1FAIpQLScBmHp0-Sg72zfsN3MpOJ0M_4qe8AeP75mLAMCIGo12hsqGMg/viewform?usp=pp_url&entry.2039261618=${encodeURIComponent(elapsedTime)}`
+      : "https://forms.gle/Y5wC6J4tHr4Cm8kf8";
+    
+    window.open(formUrl, '_blank', 'noopener,noreferrer');
   };
 
   return (
@@ -73,7 +78,7 @@ const Success = () => {
                 <li><span className="text-secondary">Digital Forensics</span>: Intercepted console communications</li>
                 <li><span className="text-accent">Algorithm Design</span>: Solved pathfinding through the digital maze</li>
                 <li><span className="text-primary">Optimization</span>: Maximized value extraction with knapsack algorithms</li>
-                <li><span className="text-secondary">Cryptography</span>: Decoded Base64 extraction routes from cookies</li>
+                <li><span className="text-secondary">Problem Solving</span>: Combined key fragments to unlock the final phase</li>
               </ul>
               
               <p>
