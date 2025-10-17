@@ -1,0 +1,284 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* LE' Red Mask Design System - Cyberpunk Theme */
+
+@layer base {
+  :root {
+    /* Core Colors - Cyberpunk Palette */
+    --background: 240 10% 3.9%;
+    --foreground: 120 100% 85%;
+
+    --card: 240 10% 6%;
+    --card-foreground: 120 100% 85%;
+
+    --popover: 240 10% 6%;
+    --popover-foreground: 120 100% 85%;
+
+    /* Neon Green Primary */
+    --primary: 120 100% 50%;
+    --primary-foreground: 240 10% 3.9%;
+    --primary-glow: 120 100% 75%;
+
+    /* Cyan Secondary */
+    --secondary: 180 100% 50%;
+    --secondary-foreground: 240 10% 3.9%;
+    --secondary-glow: 180 100% 75%;
+
+    /* Purple Accent */
+    --accent: 280 100% 60%;
+    --accent-foreground: 240 10% 3.9%;
+    --accent-glow: 280 100% 80%;
+
+    /* Matrix Colors */
+    --matrix: 120 100% 40%;
+    --matrix-glow: 120 100% 60%;
+
+    /* Muted */
+    --muted: 240 5% 15%;
+    --muted-foreground: 120 20% 60%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 240 10% 3.9%;
+
+    --border: 240 10% 15%;
+    --input: 240 10% 10%;
+    --ring: 120 100% 50%;
+
+    --radius: 0.75rem;
+
+    /* Custom Design Tokens */
+    --terminal-bg: 240 10% 5%;
+    --terminal-border: 120 100% 30%;
+    --glow-sm: 0 0 10px;
+    --glow-md: 0 0 20px;
+    --glow-lg: 0 0 30px;
+    --glow-xl: 0 0 50px;
+
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(120 100% 50%), hsl(120 100% 70%));
+    --gradient-secondary: linear-gradient(135deg, hsl(180 100% 50%), hsl(180 100% 70%));
+    --gradient-accent: linear-gradient(135deg, hsl(280 100% 60%), hsl(280 100% 80%));
+    --gradient-matrix: linear-gradient(180deg, transparent, hsl(120 100% 10%));
+
+    /* Animations */
+    --transition-glow: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --animation-pulse: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    --animation-bounce: bounce 1s infinite;
+
+    --sidebar-background: 0 0% 98%;
+
+    --sidebar-foreground: 240 5.3% 26.1%;
+
+    --sidebar-primary: 240 5.9% 10%;
+
+    --sidebar-primary-foreground: 0 0% 98%;
+
+    --sidebar-accent: 240 4.8% 95.9%;
+
+    --sidebar-accent-foreground: 240 5.9% 10%;
+
+    --sidebar-border: 220 13% 91%;
+
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-mono;
+    font-family: 'JetBrains Mono', monospace;
+  }
+}
+
+@layer components {
+  /* Terminal Style Component */
+  .terminal {
+    @apply bg-card border border-primary/30 rounded-lg p-6;
+    background: hsl(var(--terminal-bg));
+    border-color: hsl(var(--terminal-border));
+    box-shadow: 
+      inset 0 1px 0 hsl(var(--primary-glow) / 0.1),
+      var(--glow-sm) hsl(var(--primary) / 0.3);
+  }
+
+  .terminal::before {
+    content: '';
+    @apply absolute inset-0 rounded-lg;
+    background: var(--gradient-matrix);
+    opacity: 0.05;
+    pointer-events: none;
+  }
+
+  /* Glowing Text Effects */
+  .glow-text {
+    text-shadow: var(--glow-sm) hsl(var(--primary));
+    transition: var(--transition-glow);
+  }
+
+  .glow-text:hover {
+    text-shadow: var(--glow-md) hsl(var(--primary));
+  }
+
+  .matrix-text {
+    color: hsl(var(--matrix));
+    text-shadow: var(--glow-sm) hsl(var(--matrix-glow));
+  }
+
+  /* Cyber Button Variants */
+  .btn-cyber {
+    @apply relative overflow-hidden bg-transparent border-2 border-primary text-primary;
+    @apply px-6 py-3 rounded-md font-semibold uppercase tracking-wider;
+    @apply transition-all duration-300;
+    text-shadow: var(--glow-sm) hsl(var(--primary));
+    box-shadow: 
+      inset 0 0 0 0 hsl(var(--primary)),
+      var(--glow-sm) hsl(var(--primary) / 0.5);
+  }
+
+  .btn-cyber:hover {
+    @apply text-primary-foreground;
+    box-shadow: 
+      inset 0 0 0 100px hsl(var(--primary)),
+      var(--glow-md) hsl(var(--primary));
+    text-shadow: none;
+  }
+
+  .btn-cyber-secondary {
+    @apply border-secondary text-secondary;
+    text-shadow: var(--glow-sm) hsl(var(--secondary));
+    box-shadow: 
+      inset 0 0 0 0 hsl(var(--secondary)),
+      var(--glow-sm) hsl(var(--secondary) / 0.5);
+  }
+
+  .btn-cyber-secondary:hover {
+    @apply text-secondary-foreground;
+    box-shadow: 
+      inset 0 0 0 100px hsl(var(--secondary)),
+      var(--glow-md) hsl(var(--secondary));
+  }
+
+  /* Matrix Rain Animation */
+  .matrix-bg {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .matrix-bg::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+      repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent 98px,
+        hsl(var(--matrix) / 0.03) 100px
+      ),
+      repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 98px,
+        hsl(var(--matrix) / 0.03) 100px
+      );
+    animation: matrix-scroll 20s linear infinite;
+    pointer-events: none;
+  }
+
+  @keyframes matrix-scroll {
+    0% { transform: translateY(-100px); }
+    100% { transform: translateY(100px); }
+  }
+
+  /* Invisible text for puzzles */
+  .invisible-text {
+    color: hsl(var(--background));
+    background-color: hsl(var(--background));
+    user-select: text;
+  }
+
+  /* Phase indicator */
+  .phase-indicator {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold;
+    @apply bg-primary/10 text-primary border border-primary/30;
+    text-shadow: var(--glow-sm) hsl(var(--primary));
+  }
+
+  /* Success glow animation */
+  .success-glow {
+    animation: success-pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes success-pulse {
+    0%, 100% { 
+      box-shadow: var(--glow-sm) hsl(var(--primary) / 0.5);
+    }
+    50% { 
+      box-shadow: var(--glow-lg) hsl(var(--primary) / 0.8);
+    }
+  }
+
+  /* Input field styling */
+  .cyber-input {
+    @apply bg-input border border-primary/30 rounded-md px-4 py-2;
+    @apply text-foreground placeholder:text-muted-foreground;
+    @apply focus:border-primary focus:ring-1 focus:ring-primary;
+    box-shadow: inset 0 1px 2px hsl(var(--background) / 0.5);
+    transition: var(--transition-glow);
+  }
+
+  .cyber-input:focus {
+    box-shadow: 
+      inset 0 1px 2px hsl(var(--background) / 0.5),
+      var(--glow-sm) hsl(var(--primary) / 0.3);
+  }
+}
